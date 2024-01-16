@@ -14,7 +14,7 @@ public:
 public ref class RedBlackTree {
 public:
     RedBlackTree() : root(nullptr) {}
-
+Node^ root;
     void insert(int value) {
         auto node = gcnew Node();
         node->value = value;
@@ -70,9 +70,24 @@ public:
         }
         return false;
     }
+    
+void remove(int value) {
+        Node^ node = root;
+        while (node !=nullptr) {
+            if (value < node->value) {
+                node = node->left;
+            }
+            else if (value > node->value) {
+                node = node->right;
+            }
+            else {
+                deleteNode(node);
+                return;
+            }
+        }
+    }
+private:
 
-public:
-    Node^ root;
 
     void fixInsert(Node^ node) {
         if (node->parent->parent != nullptr) {
@@ -158,21 +173,6 @@ public:
         node->parent = leftChild;
     }
     
-    void remove(int value) {
-        Node^ node = root;
-        while (node !=nullptr) {
-            if (value < node->value) {
-                node = node->left;
-            }
-            else if (value > node->value) {
-                node = node->right;
-            }
-            else {
-                deleteNode(node);
-                return;
-            }
-        }
-    }
 
     void deleteNode(Node^ node) {
         Node^ brother;
